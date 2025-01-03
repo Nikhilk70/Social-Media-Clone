@@ -1,0 +1,25 @@
+{% extends "posts/post_base.html" %}
+{% load bootstrap4 %}
+
+{% block post_content %}
+<div class="post-detail">
+    <h2>{{ post.message }}</h2>
+    <div class="media">
+        <div class="media-body">
+            <h5 class="mt-0">{{ post.user.username }}</h5>
+            <h6><time class="time">{{ post.created_at }}</time></h6>
+            {% if post.group %}
+            <h6><span class="group-name">in {{ post.group.name }}</span></h6>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<div class="media-footer">
+    {% if user.is_authenticated and post.user == user %}
+    <a href="{% url 'posts:delete' pk=post.pk %}" title="delete" class="btn btn-primary">
+        <span class="glyphicon glyphicon-remove text-danger" aria-hidden="true"></span>
+        <span class="text-danger icon-label">Delete</span>
+    </a>
+    {% endif %}
+</div>
+{% endblock %}
